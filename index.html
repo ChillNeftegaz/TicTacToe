@@ -282,10 +282,11 @@ overlay.addEventListener('animationend', handler);
     (cells[2].innerText === "❌" && cells[4].innerText === "❌" && cells[6].innerText === "❌")
 ) {
     winspan.innerText = "Победил ❌";
+    if (gameIsRunning) {
+        krestikWins++;}
     gameIsRunning = false;
     resetButton.classList.remove('hidden');
     stats.classList.add('cell-rotate');
-    krestikWins++;
     crestikW.innerText = krestikWins;
     ls.setItem('крестные победы', krestikWins);
 } else if (isFull()) {
@@ -303,10 +304,11 @@ overlay.addEventListener('animationend', handler);
     (cells[2].innerText === "⭕" && cells[4].innerText === "⭕" && cells[6].innerText === "⭕")
 ) {
     winspan.innerText = "Победил ⭕";
+    if (gameIsRunning) {
+        nolikWins++;}
     gameIsRunning = false;
     resetButton.classList.remove('hidden');
     stats.classList.add('cell-rotate');
-    nolikWins++;
     nolikW.innerText = nolikWins;
     ls.setItem('ноликовые победы', nolikWins);
             }});
