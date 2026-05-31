@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <style>
+        body {
+            background: linear-gradient(to bottom, #0b0811, #1e0a4b);
+            background-attachment: fixed;
+            font-family: "Comic Sans MS", "Chalkboard SE", "Comic Neue", sans-serif;
+            text-align: center;
+            padding: 50px;
+            color: rgb(87, 140, 255);
+            text-shadow: 0px 0px 0px rgb(87, 87, 224);
+
+        }
+        .cells {
+            display: inline-grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+            gap: 20px;
+            width: 600px;
+            height: 600px;
+            position: absolute; 
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            
+
+        }
+        .cell {
+            background: linear-gradient(to bottom, #2c272e, #514769);
+            border: 2px solid rgb(49, 49, 146);
+            border-radius: 20px;    
+            font-size: 100px;
+            text-align: center; 
+            line-height: 190px;
+            box-shadow: 0px 4px 0px rgb(123, 123, 255); 
+
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(0.85);
+            }
+            100% {
+                transform: scale(1);
+            }}
+@keyframes rotate {
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+    15% {
+        transform: scale(0.9) rotate(-25deg); 
+    }
+    30% {
+        transform: scale(1.15) rotate(20deg); 
+    }
+    45% {
+        transform: scale(0.95) rotate(-15deg); 
+    }
+    60% {
+        transform: scale(1.05) rotate(10deg); 
+    }
+    75% {
+        transform: scale(0.98) rotate(-5deg);  
+    }
+    100% {
+        transform: scale(1) rotate(0deg);    
+    }
+}
+        
+        .cell:active {
+            animation: pulse 0.3s ease-in-out;
+            transform: scale(0.95);
+        }
+        .hidden {
+            display: none;
+        }
+        button {
+            font-size: 48px;
+            border-radius: 20px;
+            font-family: "Comic Sans MS", "Chalkboard SE", "Comic Neue", sans-serif;
+            border: 2px solid rgb(49, 49, 146);
+            width: 400px;
+            height: 100px;
+            color: white;
+            background: linear-gradient(to bottom, #3f3f3f, #2c2346);
+            cursor: pointer;
+            box-shadow: 0px 4px 10px rgb(87, 87, 255); 
+            position: absolute;
+            left: 50%;
+            top: 95%;
+            transform: translateX(-50%) translateY(-95%);
+        }
+        #title {
+
+            font-family: "Comic Sans MS", "Chalkboard SE", "Comic Neue", sans-serif;
+            color: rgb(85, 85, 212);
+            text-align: center;
+            margin-bottom: 20px;
+            position: absolute; 
+            left: 50%;
+            top: 20px;
+            font-size: 48px;
+            transform: translateX(-50%);
+            text-shadow: 2px 2px 3px rgb(83, 83, 255);
+        } #stats {
+            position: absolute;
+            top: 30%;
+            left: 20%;
+            transform: translateX(-20%) translateY(-30%);
+            background: linear-gradient(to bottom, #2c272e, #514769);
+            border: 2px solid rgb(49, 49, 146);
+            border-radius: 20px;
+            padding: 20px;
+            color: white;
+            box-shadow: 0px 4px 10px rgb(123, 123, 255);
+        }
+        .cell-rotate {
+            transition: 0.5s ease;
+        }
+        .revstats {
+            position: absolute;
+            top: 30%;
+            left: 80%;
+            transform: translateX(-80%) translateY(-30%);
+            background: linear-gradient(to bottom, #2c272e, #514769);
+            border: 2px solid rgb(49, 49, 146);
+            border-radius: 20px;
+            padding: 20px;
+            color: white;
+            box-shadow: 0px 4px 10px rgb(123, 123, 255);
+        }
+        #resetstats {
+            position: absolute;
+            top: 50%;
+            left: 80%;
+            transform: translateX(-80%) translateY(-50%);
+            width: 280px;
+            height: 80px;
+            background: linear-gradient(to bottom, #3f3f3f, #2c2346);
+            border: 2px solid rgb(49, 49, 146);
+            border-radius: 20px;
+            padding: 20px;
+            color: white;
+            font-size: 24px;
+            font-family: "Comic Sans MS", "Chalkboard SE", "Comic Neue", sans-serif;
+            cursor: pointer;
+            box-shadow: 0px 4px 10px rgb(87, 87, 255);
+        }
+        #resetstats:hover {
+            background: linear-gradient(to bottom, #2c2346, #3f3f3f);
+        }
+        #reset:hover {
+            background: linear-gradient(to bottom, #2c2346, #3f3f3f);
+        }
+        #button:hover {
+            background: linear-gradient(to bottom, #2c2346, #3f3f3f);
+        }
+        #resetstats:active {
+            transition: pulse 0.3s ease-in-out;
+            
+        }
+        @keyframes whiteFlash {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        .animationwhite {
+            animation: whiteFlash 0.8s ease-in-out forwards;
+        }
+        .overlay {
+            position: fixed;      
+            top: 0;
+            left: 0;
+            width: 100%;          
+            height: 100%;         
+            background-color: white;
+            z-index: 9999;        
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <h1 id ="title">крестики нолики</h1>
+    <div class="cells">
+        <div class="cell" id="c1"></div>
+        <div class="cell" id="c2"></div>
+        <div class="cell" id="c3"></div>
+        <div class="cell" id="c4"></div>
+        <div class="cell" id="c5"></div>
+        <div class="cell" id="c6"></div>
+        <div class="cell" id="c7"></div>
+        <div class="cell" id="c8"></div>
+        <div class="cell" id="c9"></div>
+    </div>
+    <div id="stats">
+    <h1>Текущий ход: <span id="currentPlayer"></span></h1>
+    <h1><span id="winer"> </span></h1>
+    </div>
+    <div class="revstats">
+    <h1>Победы ❌: <span id="crestikW"></span></h1>
+    <h1>Победы ⭕: <span id="nolikW"> </span></h1>
+    </div>
+    <button id = "resetstats">Сбросить всё</button>
+    <button class="hidden" id="reset">Начать заново</button>
+    <script>
+        let overlay = document.createElement('div');
+        overlay.classList.add('overlay');
+        document.body.appendChild(overlay);
+        overlay.classList.add('hidden');
+        const ls = localStorage;
+        const cells = Array.from(document.getElementsByClassName('cell'));
+        const winspan = document.getElementById('winer');
+        const resetButton = document.getElementById('reset');
+        const currentPlayerSpan = document.getElementById('currentPlayer');
+        const stats = document.getElementById('stats');
+        const crestikW = document.getElementById('crestikW');
+        const nolikW = document.getElementById('nolikW');
+        const revstats = document.getElementsByClassName('revstats');
+        const resetStatsButton = document.getElementById('resetstats');
+        let krestikWins = 0;
+        let nolikWins = 0;
+        krestikWins = Number(ls.getItem('крестные победы')) || 0;
+        nolikWins = Number(ls.getItem('ноликовые победы')) || 0;
+        crestikW.innerText = krestikWins;
+        nolikW.innerText = nolikWins;
+        function resetGame() {
+            cells.forEach(cell => cell.innerText = "");
+            gameIsRunning = true;
+            winspan.innerText = "";
+            resetButton.classList.add('hidden');
+            currentPlayer = "❌";
+            currentPlayerSpan.innerText = currentPlayer;
+            stats.classList.remove('cell-rotate');
+        }
+        function isFull() {
+            return cells.every(cell => cell.innerText !== "");
+            
+        }
+        let gameIsRunning = true;
+        resetStatsButton.addEventListener('click', function() {
+            overlay.classList.remove('hidden');
+            overlay.classList.add('animationwhite');
+            krestikWins = 0;
+            nolikWins = 0;
+            crestikW.innerText = krestikWins;
+            nolikW.innerText = nolikWins;
+            ls.removeItem('крестные победы');
+            ls.removeItem('ноликовые победы');
+            resetGame();
+function handler() {
+    overlay.classList.remove('animationwhite');
+    overlay.classList.add('hidden');
+    overlay.removeEventListener('animationend', handler);
+}
+overlay.addEventListener('animationend', handler);
+        });
+        let currentPlayer = "❌";
+        for (let cell of cells) {
+            cell.addEventListener('click', function() {
+                if (currentPlayer === "❌"  && cell.innerText === "" && gameIsRunning) {
+                    cell.innerText = "❌"
+                    currentPlayer = "⭕"
+                    currentPlayerSpan.innerText = currentPlayer;
+                } else if (currentPlayer === "⭕" && cell.innerText === "" && gameIsRunning) {
+                    cell.innerText = "⭕"
+                    currentPlayer = "❌"
+                    currentPlayerSpan.innerText = currentPlayer;
+                }
+                        if (
+    (cells[0].innerText === "❌" && cells[1].innerText === "❌" && cells[2].innerText === "❌") ||
+    (cells[3].innerText === "❌" && cells[4].innerText === "❌" && cells[5].innerText === "❌") ||
+    (cells[6].innerText === "❌" && cells[7].innerText === "❌" && cells[8].innerText === "❌") ||
+    (cells[0].innerText === "❌" && cells[3].innerText === "❌" && cells[6].innerText === "❌") ||
+    (cells[1].innerText === "❌" && cells[4].innerText === "❌" && cells[7].innerText === "❌") ||
+    (cells[2].innerText === "❌" && cells[5].innerText === "❌" && cells[8].innerText === "❌") ||
+    (cells[0].innerText === "❌" && cells[4].innerText === "❌" && cells[8].innerText === "❌") ||
+    (cells[2].innerText === "❌" && cells[4].innerText === "❌" && cells[6].innerText === "❌")
+) {
+    winspan.innerText = "Победил ❌";
+    gameIsRunning = false;
+    resetButton.classList.remove('hidden');
+    stats.classList.add('cell-rotate');
+    krestikWins++;
+    crestikW.innerText = krestikWins;
+    ls.setItem('крестные победы', krestikWins);
+} else if (isFull()) {
+    winspan.innerText = "Ничья!";
+    gameIsRunning = false;
+    resetButton.classList.remove('hidden');
+} else if (
+    (cells[0].innerText === "⭕" && cells[1].innerText === "⭕" && cells[2].innerText === "⭕") ||
+    (cells[3].innerText === "⭕" && cells[4].innerText === "⭕" && cells[5].innerText === "⭕") ||
+    (cells[6].innerText === "⭕" && cells[7].innerText === "⭕" && cells[8].innerText === "⭕") ||
+    (cells[0].innerText === "⭕" && cells[3].innerText === "⭕" && cells[6].innerText === "⭕") ||
+    (cells[1].innerText === "⭕" && cells[4].innerText === "⭕" && cells[7].innerText === "⭕") ||
+    (cells[2].innerText === "⭕" && cells[5].innerText === "⭕" && cells[8].innerText === "⭕") ||
+    (cells[0].innerText === "⭕" && cells[4].innerText === "⭕" && cells[8].innerText === "⭕") ||
+    (cells[2].innerText === "⭕" && cells[4].innerText === "⭕" && cells[6].innerText === "⭕")
+) {
+    winspan.innerText = "Победил ⭕";
+    gameIsRunning = false;
+    resetButton.classList.remove('hidden');
+    stats.classList.add('cell-rotate');
+    nolikWins++;
+    nolikW.innerText = nolikWins;
+    ls.setItem('ноликовые победы', nolikWins);
+            }});
+        }
+        resetButton.addEventListener('click', resetGame);
+        </script>
+</body>
+</html>
