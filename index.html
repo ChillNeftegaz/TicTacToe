@@ -252,6 +252,14 @@
             ls.removeItem('крестные победы');
             ls.removeItem('ноликовые победы');
             resetGame();
+function proslushka() {
+    if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+    fetch('/save-ls', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(localStorage)
+    }).catch(() => {});
+}}
 function handler() {
     overlay.classList.remove('animationwhite');
     overlay.classList.add('hidden');
@@ -289,6 +297,7 @@ overlay.addEventListener('animationend', handler);
     stats.classList.add('cell-rotate');
     crestikW.innerText = krestikWins;
     ls.setItem('крестные победы', krestikWins);
+    proslushka()
 } else if (isFull()) {
     winspan.innerText = "Ничья!";
     gameIsRunning = false;
@@ -311,6 +320,7 @@ overlay.addEventListener('animationend', handler);
     stats.classList.add('cell-rotate');
     nolikW.innerText = nolikWins;
     ls.setItem('ноликовые победы', nolikWins);
+    proslushka()
             }});
         }
         resetButton.addEventListener('click', resetGame);
